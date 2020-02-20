@@ -4,11 +4,79 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
-​
 const OUTPUT_DIR = path.resolve(__dirname, "output")
 const outputPath = path.join(OUTPUT_DIR, "team.html");
-​
 const render = require("./lib/htmlRenderer");
+
+// const questions = [
+    
+//     {
+//         type: 'list',
+//         message: 'What is your role?',
+//         name: 'role',
+//         choices: ['Intern', 'Employee', 'Manager']
+//     },
+
+//     {
+//         type: 'input',
+//         message: 'Please enter your GitHub username:',
+//         name: 'username'
+//     }
+// ];
+
+
+inquirer
+  .prompt([
+    {
+        type: 'list',
+        message: 'What is your role?',
+        name: 'role',
+        choices: ['Intern', 'Engineer', 'Manager']
+    },
+
+    {
+        type: 'input',
+        message: 'Please enter your email',
+        name: 'email',
+    },
+
+  ]).then(function (res1) {
+      console.log(res1);
+    // if (res1.role === 'Intern') {
+    //     console.log("Your are a: " + res1);
+    //     inquirer.prompt([
+    //         {
+    //             type: 'input',
+    //             message: 'What school do you attend?',
+    //             name: 'school'
+    //         }
+    //     ]).then(function (res2) {
+    //         console.log("Attending: " + res2)
+    //     })
+    // } else if (response.role === 'Engineer') {
+    //     console.log("Your are a: " + res1);
+    //     inquirer.prompt([
+    //         {
+    //             type: 'input',
+    //             message: 'What is your GitHub username?',
+    //             name: 'username'
+    //         }
+    //     ]).then(function (res3) {
+    //         console.log("Username: " + res3);
+    //     })
+    // } else if (response.role === 'Manager') {
+    //     console.log("Your are a: " + res1);
+    //     inquirer.prompt([
+    //         {
+    //             type: 'input',
+    //             message: 'What is your office number?',
+    //             name: 'number'
+    //         }
+    //     ]).then(function (res4) {
+    //         console.log("Office Number: " + res4);
+    //     })
+    // }
+  })
 ​
 ​
 // Write code to use inquirer to gather information about the development team members,
