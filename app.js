@@ -8,8 +8,63 @@ const OUTPUT_DIR = path.resolve(__dirname, "output")
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 
+
+
+// const questions = [
+//     {   
+//         type: 'input',
+//         message: 'What is your full name?',
+//         name: 'name'
+
+//     },
+//     {
+//         type: 'list',
+//         message: 'What is your role?',
+//         name: 'role',
+//         choices: ['Intern', 'Engineer', 'Manager']
+//     },
+
+//     {
+//         type: 'input',
+//         message: 'Please enter your email',
+//         name: 'email',
+//     }
+// ]
+
+// const internQ = [
+//     {
+//         type: 'input',
+//         message: 'What school do you attend?',
+//         name: 'school'
+//     }
+// ]
+
+
+// const engineerQ = [
+//     {
+//         type: 'input',
+//         message: 'What is your GitHub username?',
+//         name: 'username'
+//     }
+// ]
+
+// const managerQ = [
+//     {
+//         type: 'input',
+//         message: 'What is your office number?',
+//         name: 'number'
+//     }
+// ]
+
+
 inquirer
   .prompt([
+    {   
+        type: 'input',
+        message: 'What is your full name?',
+        name: 'name'
+
+    },
     {
         type: 'list',
         message: 'What is your role?',
@@ -24,41 +79,42 @@ inquirer
     }
 
   ]).then(function(res1){
-      console.log(res1);
-        // if (res1.role === 'Intern') {
-    //     console.log("Your are a: " + res1);
-    //     inquirer.prompt([
-    //         {
-    //             type: 'input',
-    //             message: 'What school do you attend?',
-    //             name: 'school'
-    //         }
-    //     ]).then(function (res2) {
-    //         console.log("Attending: " + res2)
-    //     })
-    // } else if (response.role === 'Engineer') {
-    //     console.log("Your are a: " + res1);
-    //     inquirer.prompt([
-    //         {
-    //             type: 'input',
-    //             message: 'What is your GitHub username?',
-    //             name: 'username'
-    //         }
-    //     ]).then(function (res3) {
-    //         console.log("Username: " + res3);
-    //     })
-    // } else if (response.role === 'Manager') {
-    //     console.log("Your are a: " + res1);
-    //     inquirer.prompt([
-    //         {
-    //             type: 'input',
-    //             message: 'What is your office number?',
-    //             name: 'number'
-    //         }
-    //     ]).then(function (res4) {
-    //         console.log("Office Number: " + res4);
-    //     })
-    // }
+    //   console.log(res1.role);
+        if (res1.role === 'Intern') {
+        console.log(res1);
+        inquirer.prompt([
+            {
+                type: 'input',
+                message: 'What school do you attend?',
+                name: 'school'
+            }
+        ]).then(function (res2) {
+            console.log(res2)
+        })
+    } 
+    else if (res1.role === 'Engineer') {   //I THINK THAT THIS MAYBE CAN NOT ACCESS RES1
+        console.log(res1);
+        inquirer.prompt([
+            {
+                type: 'input',
+                message: 'What is your GitHub username?',
+                name: 'username'
+            }
+        ]).then(function (res3) {
+            console.log(res3);
+        })
+    } else if (res1.role === 'Manager') {
+        console.log(res1);
+        inquirer.prompt([
+            {
+                type: 'input',
+                message: 'What is your office number?',
+                name: 'number'
+            }
+        ]).then(function (res4) {
+            console.log(res4);
+        })
+    }
   })
 
 // Write code to use inquirer to gather information about the development team members,
