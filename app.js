@@ -7,115 +7,110 @@ const fs = require("fs");
 const OUTPUT_DIR = path.resolve(__dirname, "output")
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
+// const Employee = require("./lib/Employee");
 
 
 
-// const questions = [
-//     {   
-//         type: 'input',
-//         message: 'What is your full name?',
-//         name: 'name'
+const employeeInfoSheet = [];
 
-//     },
-//     {
-//         type: 'list',
-//         message: 'What is your role?',
-//         name: 'role',
-//         choices: ['Intern', 'Engineer', 'Manager']
-//     },
-
-//     {
-//         type: 'input',
-//         message: 'Please enter your email',
-//         name: 'email',
-//     }
-// ]
-
-// const internQ = [
-//     {
-//         type: 'input',
-//         message: 'What school do you attend?',
-//         name: 'school'
-//     }
-// ]
-
-
-// const engineerQ = [
-//     {
-//         type: 'input',
-//         message: 'What is your GitHub username?',
-//         name: 'username'
-//     }
-// ]
-
-// const managerQ = [
-//     {
-//         type: 'input',
-//         message: 'What is your office number?',
-//         name: 'number'
-//     }
-// ]
-
-
-inquirer
-  .prompt([
+const questions = [
     {   
         type: 'input',
         message: 'What is your full name?',
         name: 'name'
 
     },
+    
     {
-        type: 'list',
-        message: 'What is your role?',
-        name: 'role',
-        choices: ['Intern', 'Engineer', 'Manager']
+        type: 'input',
+        message: 'What is your employee ID?',
+        name: 'id'
     },
 
     {
         type: 'input',
         message: 'Please enter your email',
         name: 'email',
-    }
+    },
 
-  ]).then(function(res1){
-    //   console.log(res1.role);
-        if (res1.role === 'Intern') {
-        console.log(res1);
-        inquirer.prompt([
-            {
-                type: 'input',
-                message: 'What school do you attend?',
-                name: 'school'
-            }
-        ]).then(function (res2) {
-            console.log(res2)
-        })
-    } 
-    else if (res1.role === 'Engineer') {   //I THINK THAT THIS MAYBE CAN NOT ACCESS RES1
-        console.log(res1);
-        inquirer.prompt([
-            {
-                type: 'input',
-                message: 'What is your GitHub username?',
-                name: 'username'
-            }
-        ]).then(function (res3) {
-            console.log(res3);
-        })
-    } else if (res1.role === 'Manager') {
-        console.log(res1);
-        inquirer.prompt([
-            {
-                type: 'input',
-                message: 'What is your office number?',
-                name: 'number'
-            }
-        ]).then(function (res4) {
-            console.log(res4);
-        })
+    {
+        type: 'list',
+        message: 'What is your role?',
+        name: 'role',
+        choices: ['Intern', 'Engineer', 'Manager']
     }
+]
+
+const internQ = [
+    {
+        type: 'input',
+        message: 'What school do you attend?',
+        name: 'school'
+    }
+]
+
+
+const engineerQ = [
+    {
+        type: 'input',
+        message: 'What is your GitHub username?',
+        name: 'username'
+    }
+]
+
+const managerQ = [
+    {
+        type: 'input',
+        message: 'What is your office number?',
+        name: 'number'
+    }
+]
+
+function getEmployeeInfo() {
+inquirer
+  .prompt(questions).then(function(resEmployee){
+        if (resEmployee.role === 'Intern') {
+            console.log(resEmployee);
+        inquirer.prompt(internQ).then(function (resIntern) {
+            console.log("app js response: " + resEmployee.name);
+        let intern = new Intern(resEmployee.name, resEmployee.id, resEmployee.email, resEmployee.role, resIntern.school);
+            console.log(intern.getName());
+        employeeInfoSheet.push(intern);
+            console.log(employeeInfoSheet);
+        });
+    } 
+    else if (resEmployee.role === 'Engineer') {  
+        console.log(resEmployee);
+        inquirer.prompt(engineerQ).then(function (resEngineer) {
+            console.log(resEngineer);
+        let engineer = new Engineer(resEmployee.name, resEmployee.id, resEmployee.email, resEmployee.role, resEngineer.github);
+            console.log(engineer.getName());
+        });
+    } else if (resEmployee.role === 'Manager') {
+        console.log(resEmployee);
+        
+        inquirer.prompt(managerQ).then(function (resManager) {
+            console.log(resManager);
+        let manager = new Manager(resEmployee.name, resEmployee.id, resEmployee.email, resEmployee.role, resManager.office);
+            console.log(manager.getName());
+        });
+    }
+    // inquirer.prompt([
+    //     {
+    //         type: 'confirm',
+    //         message: 'Would you like to add another Employee?',
+    //         name: 'truefalse'
+    //     }.then(function (addEmployee) {
+    //         if (addEmployee.truefalse === true) {
+    //             getEmployeeInfo();
+    //         }
+    //     })
+  
+    // ])
   })
+  }
+  
+  getEmployeeInfo();
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member using the correct classes as blueprints!
