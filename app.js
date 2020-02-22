@@ -7,9 +7,6 @@ const fs = require("fs");
 const OUTPUT_DIR = path.resolve(__dirname, "output")
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
-// const Employee = require("./lib/Employee");
-
-
 
 const employeeInfoSheet = [];
 
@@ -70,45 +67,57 @@ function getEmployeeInfo() {
 inquirer
   .prompt(questions).then(function(resEmployee){
         if (resEmployee.role === 'Intern') {
-            console.log(resEmployee);
         inquirer.prompt(internQ).then(function (resIntern) {
-            console.log("app js response: " + resEmployee.name);
         let intern = new Intern(resEmployee.name, resEmployee.id, resEmployee.email, resEmployee.role, resIntern.school);
-            console.log(intern.getName());
+        console.log(intern);
         employeeInfoSheet.push(intern);
-            console.log(employeeInfoSheet);
+        console.log(employeeInfoSheet);
+        // addEmployee();
         });
     } 
     else if (resEmployee.role === 'Engineer') {  
-        console.log(resEmployee);
         inquirer.prompt(engineerQ).then(function (resEngineer) {
-            console.log(resEngineer);
+        console.log(resEngineer.github);
+        
         let engineer = new Engineer(resEmployee.name, resEmployee.id, resEmployee.email, resEmployee.role, resEngineer.github);
-            console.log(engineer.getName());
+        console.log(Engineer);
+        employeeInfoSheet.push(engineer);
+        console.log(employeeInfoSheet);
+        // addEmployee();
         });
     } else if (resEmployee.role === 'Manager') {
-        console.log(resEmployee);
-        
         inquirer.prompt(managerQ).then(function (resManager) {
-            console.log(resManager);
         let manager = new Manager(resEmployee.name, resEmployee.id, resEmployee.email, resEmployee.role, resManager.office);
-            console.log(manager.getName());
+        console.log(manager);
+        employeeInfoSheet.push(manager);
+        console.log(employeeInfoSheet);
+        // addEmployee();
         });
-    }
-    // inquirer.prompt([
-    //     {
-    //         type: 'confirm',
-    //         message: 'Would you like to add another Employee?',
-    //         name: 'truefalse'
-    //     }.then(function (addEmployee) {
-    //         if (addEmployee.truefalse === true) {
-    //             getEmployeeInfo();
-    //         }
-    //     })
+    };
+
+    // addEmployee();
+   
+  });
+  }; 
+
+//   function addEmployee(){
   
-    // ])
-  })
-  }
+//   inquirer.prompt([
+//     {
+//         type: 'list',
+//         message: 'Would you like to add another employee?',
+//         name: 'addemployee',
+//         choices: ['Yes', 'No']
+//     }.then(function (addEmployee) {
+//             if (addEmployee.addemployee === 'Yes') {
+//                 getEmployeeInfo();
+//             }
+//             console.log("Thank you... Generating HTML");
+//             process.exit(0);
+//         })
+  
+//     ])
+
   
   getEmployeeInfo();
 
