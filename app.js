@@ -4,122 +4,136 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
-const OUTPUT_DIR = path.resolve(__dirname, "output")
+const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 
 const employeeInfoSheet = [];
 
 const questions = [
-    {   
-        type: 'input',
-        message: 'What is your full name?',
-        name: 'name'
+  {
+    type: "input",
+    message: "What is your full name?",
+    name: "name"
+  },
 
-    },
-    
-    {
-        type: 'input',
-        message: 'What is your employee ID?',
-        name: 'id'
-    },
+  {
+    type: "input",
+    message: "What is your employee ID?",
+    name: "id"
+  },
 
-    {
-        type: 'input',
-        message: 'Please enter your email',
-        name: 'email',
-    },
+  {
+    type: "input",
+    message: "Please enter your email",
+    name: "email"
+  },
 
-    {
-        type: 'list',
-        message: 'What is your role?',
-        name: 'role',
-        choices: ['Intern', 'Engineer', 'Manager']
-    }
-]
+  {
+    type: "list",
+    message: "What is your role?",
+    name: "role",
+    choices: ["Intern", "Engineer", "Manager"]
+  }
+];
 
 const internQ = [
-    {
-        type: 'input',
-        message: 'What school do you attend?',
-        name: 'school'
-    }
-]
-
+  {
+    type: "input",
+    message: "What school do you attend?",
+    name: "school"
+  }
+];
 
 const engineerQ = [
-    {
-        type: 'input',
-        message: 'What is your GitHub username?',
-        name: 'username'
-    }
-]
+  {
+    type: "input",
+    message: "What is your GitHub username?",
+    name: "username"
+  }
+];
 
 const managerQ = [
-    {
-        type: 'input',
-        message: 'What is your office number?',
-        name: 'number'
-    }
-]
+  {
+    type: "input",
+    message: "What is your office number?",
+    name: "number"
+  }
+];
 
 function getEmployeeInfo() {
-inquirer
-  .prompt(questions).then(function(resEmployee){
-        if (resEmployee.role === 'Intern') {
-        inquirer.prompt(internQ).then(function (resIntern) {
-        let intern = new Intern(resEmployee.name, resEmployee.id, resEmployee.email, resEmployee.role, resIntern.school);
+  inquirer.prompt(questions).then(function(resEmployee) {
+    if (resEmployee.role === "Intern") {
+      inquirer.prompt(internQ).then(function(resIntern) {
+        let intern = new Intern(
+          resEmployee.name,
+          resEmployee.id,
+          resEmployee.email,
+          resEmployee.role,
+          resIntern.school
+        );
         console.log(intern);
         employeeInfoSheet.push(intern);
         console.log(employeeInfoSheet);
-        // addEmployee();
-        });
-    } 
-    else if (resEmployee.role === 'Engineer') {  
-        inquirer.prompt(engineerQ).then(function (resEngineer) {
+        addEmployee();
+      });
+    } else if (resEmployee.role === "Engineer") {
+      inquirer.prompt(engineerQ).then(function(resEngineer) {
         console.log(resEngineer.github);
-        
-        let engineer = new Engineer(resEmployee.name, resEmployee.id, resEmployee.email, resEmployee.role, resEngineer.github);
+
+        let engineer = new Engineer(
+          resEmployee.name,
+          resEmployee.id,
+          resEmployee.email,
+          resEmployee.role,
+          resEngineer.username
+        );
         console.log(Engineer);
         employeeInfoSheet.push(engineer);
         console.log(employeeInfoSheet);
-        // addEmployee();
-        });
-    } else if (resEmployee.role === 'Manager') {
-        inquirer.prompt(managerQ).then(function (resManager) {
-        let manager = new Manager(resEmployee.name, resEmployee.id, resEmployee.email, resEmployee.role, resManager.office);
+        addEmployee();
+      });
+    } else if (resEmployee.role === "Manager") {
+      inquirer.prompt(managerQ).then(function(resManager) {
+        let manager = new Manager(
+          resEmployee.name,
+          resEmployee.id,
+          resEmployee.email,
+          resEmployee.role,
+          resManager.number
+        );
         console.log(manager);
         employeeInfoSheet.push(manager);
         console.log(employeeInfoSheet);
-        // addEmployee();
-        });
-    };
+        addEmployee();
+      });
+    }
 
     // addEmployee();
-   
   });
-  }; 
+}
 
-//   function addEmployee(){
-  
-//   inquirer.prompt([
-//     {
-//         type: 'list',
-//         message: 'Would you like to add another employee?',
-//         name: 'addemployee',
-//         choices: ['Yes', 'No']
-//     }.then(function (addEmployee) {
-//             if (addEmployee.addemployee === 'Yes') {
-//                 getEmployeeInfo();
-//             }
-//             console.log("Thank you... Generating HTML");
-//             process.exit(0);
-//         })
-  
-//     ])
+function addEmployee() {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "Would you like to add another employee?",
+        name: "addemployee",
+        choices: ["Yes", "No"]
+      }
+    ])
+    .then(function(addEmployee) {
+      if (addEmployee.addemployee === "Yes") {
+        getEmployeeInfo();
+      } else {
+        console.log("Thank you... Generating HTML");
+        process.exit(0);
+      }
+    });
+}
 
-  
-  getEmployeeInfo();
+getEmployeeInfo();
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member using the correct classes as blueprints!
@@ -136,6 +150,6 @@ inquirer
 // employee type.
 // HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
 // and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an 
+// for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work!
