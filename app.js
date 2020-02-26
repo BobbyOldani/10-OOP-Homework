@@ -108,8 +108,6 @@ function getEmployeeInfo() {
         addEmployee();
       });
     }
-
-    // addEmployee();
   });
 }
 
@@ -127,8 +125,9 @@ function addEmployee() {
       if (addEmployee.addemployee === "Yes") {
         getEmployeeInfo();
       } else {
+        render(employeeInfoSheet);
+        fs.writeFileSync(outputPath, render(employeeInfoSheet));
         console.log("Thank you... Generating HTML");
-        process.exit(0);
       }
     });
 }
